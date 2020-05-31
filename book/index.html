@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form id="content">
+        <input type="text" name="input" class="input" id="search-input">
+        <button type="reset" class="search" id="search-btn"></button>
+    </form>
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        const form = document.querySelector('#content'),
+            text = document.querySelector('.input');
+
+        console.log(event);
+        function book(event) {
+            event.preventDefault();
+            $.ajax({
+            method: "GET",
+            url: "https://dapi.kakao.com/v3/search/book?target=title",
+            data: { query: text.value },
+            headers: { Authorization: "KakaoAK c34c24fdbe420f6f3ab3616bd79f750a" }
+        })
+            .done(function (msg) {
+                console.log(msg);
+                $("p").append(msg.documents[0].title);
+                $("p").append("<img src = '" + msg.documents[0].thumbnail + "'/>");
+            });
+        }
+        function init() {
+            form.addEventListener("submit", book)
+        }
+
+        init();
+       
+    </script>
+    <script src="main.js"></script>
+    <script src="search.js"></script>
+</body>
+
+</html>
